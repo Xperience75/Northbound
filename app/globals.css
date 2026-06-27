@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #fafaf7;
+  --ink: #14171c;
+  --line: #e5e2da;
+  --accent: #b85c38;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-feature-settings: "ss01", "cv01", "cv11";
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* Refined executive scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: #d6d2c8;
+  border-radius: 10px;
+  border: 2px solid var(--canvas);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b8b3a6;
+}
+
+@layer components {
+  /* Section label — monospace, tracked-out, used above headings */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-widest2 text-ink-muted;
+  }
+
+  /* Large display heading */
+  .display {
+    @apply font-display font-light tracking-tightest text-ink;
+    font-variation-settings: "SOFT" 50, "WONK" 0;
+  }
+
+  /* Body lead paragraph */
+  .lead {
+    @apply text-lg leading-relaxed text-ink-soft md:text-xl;
+  }
+
+  /* Underlined link that animates from left */
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute left-0 -bottom-0.5 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-500 ease-executive;
+  }
+  .link-underline:hover::after {
+    @apply scale-x-100;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-medium text-canvas transition-all duration-500 ease-executive hover:bg-accent hover:shadow-lg hover:shadow-accent/20;
+  }
+
+  /* Ghost / secondary button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-transparent px-7 py-3.5 text-sm font-medium text-ink transition-all duration-500 ease-executive hover:border-ink hover:bg-ink hover:text-canvas;
+  }
+
+  /* Section container */
+  .shell {
+    @apply mx-auto w-full max-w-content px-6 md:px-10;
+  }
+}
+
+/* Hide scrollbar utility for marquee rows */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
