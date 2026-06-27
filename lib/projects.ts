@@ -15,7 +15,8 @@ export interface Project {
   outcome: string;
   tech: string[];
   services: string[];
-  accent: string; // hex used for the project card visual
+  accent: string; // hex used for fallback / overlay tint
+  image: string; // local screenshot path in /public
 }
 
 export const projects: Project[] = [
@@ -39,6 +40,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Headless CMS", "Vercel"],
     services: ["Strategy", "Design System", "Frontend Engineering", "CMS"],
     accent: "#1E3A5F",
+    image: "/vintage-powercare.png",
   },
   {
     slug: "technovative-solutions",
@@ -60,6 +62,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Tailwind CSS", "Responsive", "SEO"],
     services: ["UX Architecture", "Frontend Engineering", "Copywriting", "SEO"],
     accent: "#0F5132",
+    image: "/technovative-solutions.png",
   },
   {
     slug: "hayapass-global-logistics",
@@ -81,6 +84,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Node.js", "Database", "Auth", "Tailwind CSS"],
     services: ["Product Strategy", "UX Design", "Full-Stack Engineering", "Dashboard"],
     accent: "#7C2D12",
+    image: "/hayapass-global-logistics.png",
   },
   {
     slug: "prometrics-construction",
@@ -102,6 +106,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Headless CMS"],
     services: ["Strategy", "Brand Presentation", "Frontend Engineering", "Content"],
     accent: "#4A2C2A",
+    image: "/prometrics-construction.png",
   },
   {
     slug: "prometrics-construction-hub",
@@ -123,6 +128,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "CMS"],
     services: ["Brand Strategy", "Design", "Frontend Engineering", "Motion"],
     accent: "#2C3E50",
+    image: "/prometrics-construction-hub.png",
   },
   {
     slug: "the-wayout-media-network",
@@ -144,6 +150,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Database CMS", "Auth", "Live Media", "Tailwind CSS"],
     services: ["Platform Strategy", "CMS Architecture", "Full-Stack Engineering", "Editorial UX"],
     accent: "#8B1A1A",
+    image: "/the-wayout-media-network.png",
   },
   {
     slug: "twomn-corporate",
@@ -166,6 +173,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Tailwind CSS", "Brand System"],
     services: ["Brand Presentation", "Frontend Engineering", "Design System"],
     accent: "#5B21B6",
+    image: "/twomn-corporate.png",
   },
 ];
 

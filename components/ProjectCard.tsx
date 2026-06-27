@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Project } from "@/lib/projects";
 
@@ -21,39 +22,33 @@ export default function ProjectCard({ project }: { project: Project }) {
         {/* Visual */}
         <button
           onClick={() => setOpen(true)}
-          className="relative block w-full overflow-hidden rounded-lg border border-line"
+          className="relative block aspect-[16/11] w-full overflow-hidden rounded-xl border border-line bg-cream"
           aria-label={`View case study: ${project.title}`}
         >
-          <div
-            className="relative aspect-[16/10] w-full transition-all duration-700 ease-executive group-hover:scale-[1.02]"
-            style={{
-              background: `linear-gradient(135deg, ${project.accent} 0%, ${shade(project.accent, -28)} 100%)`,
-            }}
-          >
-            {/* Compass motif */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-90">
-              <svg viewBox="0 0 200 200" className="h-2/3 w-2/3" fill="none" aria-hidden>
-                <circle cx="100" cy="100" r="68" stroke="#ffffff" strokeOpacity="0.25" strokeWidth="1" />
-                <circle cx="100" cy="100" r="92" stroke="#ffffff" strokeOpacity="0.12" strokeWidth="1" />
-                <path d="M100 32 L112 100 L100 168 L88 100 Z" fill="#ffffff" fillOpacity="0.9" />
-                <circle cx="100" cy="100" r="4" fill="#ffffff" />
-              </svg>
-            </div>
+          <Image
+            src={project.image}
+            alt={`${project.title} — live website`}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover object-top transition-transform duration-[1.1s] ease-executive group-hover:scale-[1.04]"
+            priority={false}
+          />
+          {/* Executive gradient overlay for legibility */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" />
 
-            {/* Project name on visual */}
-            <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-              <span className="font-mono text-[10px] uppercase tracking-widest2 text-white/70">
-                {project.industry}
-              </span>
-              <h3 className="mt-2 font-display text-2xl font-light text-white md:text-3xl">
-                {project.title}
-              </h3>
-            </div>
+          {/* Project name on visual */}
+          <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6 text-left md:p-7">
+            <span className="font-mono text-[10px] uppercase tracking-widest2 text-canvas/70">
+              {project.industry}
+            </span>
+            <h3 className="font-display text-2xl font-light leading-tight text-canvas md:text-3xl">
+              {project.title}
+            </h3>
+          </div>
 
-            {/* Hover overlay cue */}
-            <div className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-all duration-500 ease-executive group-hover:bg-white/25">
-              <span className="text-white" aria-hidden>↗</span>
-            </div>
+          {/* Hover overlay cue */}
+          <div className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full bg-canvas/15 text-canvas backdrop-blur-md transition-all duration-500 ease-executive group-hover:bg-accent group-hover:text-canvas">
+            <span aria-hidden>↗</span>
           </div>
         </button>
 
@@ -100,7 +95,7 @@ function CaseStudyModal({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-ink/40 backdrop-blur-sm p-4 md:p-8"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-ink/50 p-4 backdrop-blur-sm md:p-8"
       onClick={onClose}
     >
       <motion.div
@@ -111,35 +106,44 @@ function CaseStudyModal({
         className="relative my-4 w-full max-w-3xl overflow-hidden rounded-2xl bg-canvas shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header banner */}
-        <div
-          className="relative px-7 py-10 md:px-10 md:py-14"
-          style={{
-            background: `linear-gradient(135deg, ${project.accent} 0%, ${shade(project.accent, -28)} 100%)`,
-          }}
-        >
+        {/* Header banner with real image */}
+        <div className="relative h-56 w-full overflow-hidden md:h-72">
+          <Image
+            src={project.image}
+            alt={`${project.title} — live website`}
+            fill
+            sizes="(max-width: 768px) 100vw, 768px"
+            className="object-cover object-top"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/20" />
+
           <button
             onClick={onClose}
-            className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+            className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-canvas/15 text-canvas backdrop-blur-md transition-colors hover:bg-canvas/30"
             aria-label="Close case study"
           >
             ✕
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-widest2 text-white/70">
-            {project.category} · {project.industry}
-          </span>
-          <h3 className="mt-3 font-display text-3xl font-light text-white md:text-4xl">
-            {project.title}
-          </h3>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/80">
-            {project.summary}
-          </p>
+
+          <div className="absolute inset-x-0 bottom-0 p-7 md:p-10">
+            <span className="font-mono text-[10px] uppercase tracking-widest2 text-canvas/70">
+              {project.category} · {project.industry}
+            </span>
+            <h3 className="mt-2.5 font-display text-3xl font-light leading-tight text-canvas md:text-4xl">
+              {project.title}
+            </h3>
+          </div>
         </div>
 
         {/* Body */}
         <div className="px-7 py-8 md:px-10 md:py-10">
+          <p className="text-[15px] leading-relaxed text-ink-soft">
+            {project.summary}
+          </p>
+
           {/* Facts */}
-          <div className="grid grid-cols-2 gap-x-6 gap-y-5 border-b border-line pb-7 md:grid-cols-4">
+          <div className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-line py-7 md:grid-cols-4">
             <Fact label="Client" value={project.client} />
             <Fact label="Role" value={project.role} />
             <Fact label="Year" value={project.year} />
@@ -147,7 +151,7 @@ function CaseStudyModal({
           </div>
 
           {/* Narrative */}
-          <div className="mt-8 space-y-7">
+          <div className="mt-7 space-y-7">
             <Narrative label="The Challenge" text={project.challenge} />
             <Narrative label="Our Solution" text={project.solution} />
             <Narrative label="The Outcome" text={project.outcome} />
@@ -220,14 +224,4 @@ function Narrative({ label, text }: { label: string; text: string }) {
       <p className="text-[15px] leading-relaxed text-ink-soft">{text}</p>
     </div>
   );
-}
-
-/** Lighten/darken a hex color by a percentage (-100..100) */
-function shade(hex: string, percent: number): string {
-  const num = parseInt(hex.replace("#", ""), 16);
-  const amt = Math.round(2.55 * percent);
-  const r = Math.max(0, Math.min(255, (num >> 16) + amt));
-  const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00ff) + amt));
-  const b = Math.max(0, Math.min(255, (num & 0x0000ff) + amt));
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
