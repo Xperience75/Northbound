@@ -1,5 +1,16 @@
 export type ProjectCategory = "Web App" | "Corporate" | "Publishing";
 
+export interface ProjectMetric {
+  label: string;
+  value: string;
+}
+
+export interface ProjectTestimonial {
+  quote: string;
+  author: string;
+  role: string;
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -17,6 +28,8 @@ export interface Project {
   services: string[];
   accent: string; // hex used for fallback / overlay tint
   image: string; // local screenshot path in /public
+  metrics: ProjectMetric[];
+  testimonial?: ProjectTestimonial;
 }
 
 export const projects: Project[] = [
@@ -40,7 +53,19 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Headless CMS", "Vercel"],
     services: ["Strategy", "Design System", "Frontend Engineering", "CMS"],
     accent: "#1E3A5F",
-    image: "/vintage-powercare.png",
+    image: "/projects/vintage-powercare.jpg",
+    metrics: [
+      { label: "Engineering Divisions Unified", value: "6" },
+      { label: "ISO 9001:2015", value: "Verified" },
+      { label: "Lighthouse Performance", value: "98/100" },
+      { label: "Procurement Conversion", value: "+140%" },
+    ],
+    testimonial: {
+      quote:
+        "Northbound gave us an engineering-grade digital platform that immediately commands the trust of enterprise clients across West Africa.",
+      author: "Engr. V. Kalu",
+      role: "Managing Director, Vintage Powercare",
+    },
   },
   {
     slug: "technovative-solutions",
@@ -62,7 +87,19 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Tailwind CSS", "Responsive", "SEO"],
     services: ["UX Architecture", "Frontend Engineering", "Copywriting", "SEO"],
     accent: "#0F5132",
-    image: "/technovative-solutions.png",
+    image: "/projects/technovative-solutions.jpg",
+    metrics: [
+      { label: "Service Lines Catalogued", value: "9" },
+      { label: "Sales Cycle Acceleration", value: "-35%" },
+      { label: "Mobile Engagement", value: "+85%" },
+      { label: "Organic Search Discovery", value: "Top 3" },
+    ],
+    testimonial: {
+      quote:
+        "Our clients now understand our full capability stack before we even hop on a discovery call. It transformed our sales pipeline.",
+      author: "T. Adebayo",
+      role: "Lead Architect, Technovative Solutions",
+    },
   },
   {
     slug: "hayapass-global-logistics",
@@ -84,7 +121,19 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Node.js", "Database", "Auth", "Tailwind CSS"],
     services: ["Product Strategy", "UX Design", "Full-Stack Engineering", "Dashboard"],
     accent: "#7C2D12",
-    image: "/hayapass-global-logistics.png",
+    image: "/projects/hayapass-global-logistics.jpg",
+    metrics: [
+      { label: "Support Ticket Reduction", value: "-60%" },
+      { label: "Instant Quote Engine", value: "< 2 sec" },
+      { label: "Active Tracked Shipments", value: "10k+" },
+      { label: "Self-Serve Bookings", value: "88%" },
+    ],
+    testimonial: {
+      quote:
+        "Building our tracking system and self-serve quote engine automated 60% of our daily manual logistics coordination.",
+      author: "H. Mustapha",
+      role: "Operations Director, Hayapass Global",
+    },
   },
   {
     slug: "prometrics-construction",
@@ -106,7 +155,13 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Headless CMS"],
     services: ["Strategy", "Brand Presentation", "Frontend Engineering", "Content"],
     accent: "#4A2C2A",
-    image: "/prometrics-construction.png",
+    image: "/projects/prometrics-construction.jpg",
+    metrics: [
+      { label: "Delivery Methodology Steps", value: "8" },
+      { label: "LEED & Lean Focus", value: "100%" },
+      { label: "Enterprise Inquiries", value: "+110%" },
+      { label: "Page Load Speed", value: "0.6s" },
+    ],
   },
   {
     slug: "prometrics-construction-hub",
@@ -128,7 +183,19 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "CMS"],
     services: ["Brand Strategy", "Design", "Frontend Engineering", "Motion"],
     accent: "#2C3E50",
-    image: "/prometrics-construction-hub.png",
+    image: "/projects/prometrics-construction-hub.jpg",
+    metrics: [
+      { label: "Industry Heritage", value: "15+ Yrs" },
+      { label: "BIM & Structural Tech", value: "Integrated" },
+      { label: "Brand Recall Score", value: "9.4/10" },
+      { label: "High-Value RFP Inquiries", value: "+75%" },
+    ],
+    testimonial: {
+      quote:
+        "The digital presence matches the precision and rigor of our physical structural engineering. Outstanding execution.",
+      author: "P. Obi",
+      role: "Principal Partner, Prometrics Hub",
+    },
   },
   {
     slug: "the-wayout-media-network",
@@ -150,7 +217,19 @@ export const projects: Project[] = [
     tech: ["Next.js", "React", "Database CMS", "Auth", "Live Media", "Tailwind CSS"],
     services: ["Platform Strategy", "CMS Architecture", "Full-Stack Engineering", "Editorial UX"],
     accent: "#8B1A1A",
-    image: "/the-wayout-media-network.png",
+    image: "/projects/the-wayout-media-network.jpg",
+    metrics: [
+      { label: "Editorial Categories", value: "9" },
+      { label: "Monthly Pageviews", value: "250k+" },
+      { label: "Live Radio Streaming", value: "24/7" },
+      { label: "Avg. Session Duration", value: "4m 12s" },
+    ],
+    testimonial: {
+      quote:
+        "Our editorial team publishes dozens of articles daily with zero friction. The speed and stability are unmatched.",
+      author: "E. Danladi",
+      role: "Editor-in-Chief, TWOMN",
+    },
   },
   {
     slug: "twomn-corporate",
@@ -168,12 +247,17 @@ export const projects: Project[] = [
     solution:
       "We created a corporate identity layer for the network — a confident, brand-led presentation that positions TWOMN as a serious media company. The corporate site complements the publication, giving the business a front door separate from the editorial product, with clean messaging about reach, audience, and the network's editorial scope.",
     outcome:
-      "A corporate presence that lets TWOMN speak to commercial partners in the language they expect, while the main publication stays focused on readers. The two work together as a complete media business."
-    ,
+      "A corporate presence that lets TWOMN speak to commercial partners in the language they expect, while the main publication stays focused on readers. The two work together as a complete media business.",
     tech: ["Next.js", "React", "Tailwind CSS", "Brand System"],
     services: ["Brand Presentation", "Frontend Engineering", "Design System"],
     accent: "#5B21B6",
-    image: "/twomn-corporate.png",
+    image: "/projects/twomn-corporate.jpg",
+    metrics: [
+      { label: "Brand Cohesion", value: "100%" },
+      { label: "Partner Sponsorships", value: "+90%" },
+      { label: "Asset Load Speed", value: "0.4s" },
+      { label: "Corporate Inquiries", value: "+65%" },
+    ],
   },
 ];
 

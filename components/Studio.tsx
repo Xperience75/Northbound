@@ -40,10 +40,10 @@ export default function Studio() {
               {stats.map((s) => (
                 <div
                   key={s.label}
-                  className="border-r border-line py-6 pr-4 last:border-r-0"
+                  className="border-r border-line py-6 pr-2 sm:pr-4 pl-1 sm:pl-0 last:border-r-0"
                 >
-                  <div className="display text-4xl md:text-5xl">{s.value}</div>
-                  <div className="mt-2 font-mono text-[11px] uppercase tracking-wider2 text-ink-muted">
+                  <div className="display text-3xl sm:text-4xl md:text-5xl">{s.value}</div>
+                  <div className="mt-2 font-mono text-[9px] sm:text-[11px] uppercase tracking-wider sm:tracking-wider2 text-ink-muted">
                     {s.label}
                   </div>
                 </div>

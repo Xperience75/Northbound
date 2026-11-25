@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,21 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Light executive palette — warm off-white canvas, charcoal type
-        canvas: "#FAFAF7",
+        canvas: "var(--canvas)",
         ink: {
-          DEFAULT: "#14171C",
-          soft: "#3A3F47",
-          muted: "#6B7280",
+          DEFAULT: "var(--ink)",
+          soft: "var(--ink-soft)",
+          muted: "var(--ink-muted)",
         },
-        line: "#E5E2DA",
-        lineSoft: "#EDEAE2",
+        line: "var(--line)",
+        lineSoft: "var(--line-soft)",
         accent: {
-          DEFAULT: "#B85C38", // terracotta — warm, restrained
-          hover: "#A04E2F",
-          tint: "#F5E9E2",
+          DEFAULT: "var(--accent)",
+          hover: "var(--accent-hover)",
+          tint: "var(--accent-tint)",
         },
-        cream: "#F3EFE6",
+        cream: "var(--cream)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

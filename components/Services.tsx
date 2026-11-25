@@ -6,16 +6,16 @@ export default function Services() {
     <section id="services" className="border-b border-line py-24 md:py-36">
       <div className="shell">
         <div className="grid gap-8 md:grid-cols-12 md:items-end">
-          <Reveal>
-            <div className="md:col-span-7">
+          <Reveal className="md:col-span-7">
+            <div>
               <p className="eyebrow mb-6">(What We Do)</p>
               <h2 className="display text-4xl leading-[1.05] md:text-6xl">
                 Four ways we build.
               </h2>
             </div>
           </Reveal>
-          <Reveal delay={0.1}>
-            <p className="max-w-sm text-ink-soft md:col-span-5">
+          <Reveal delay={0.1} className="md:col-span-5">
+            <p className="max-w-sm text-ink-soft">
               We keep our offering tight. Each service below is one we&apos;ve
               delivered end-to-end, repeatedly, for real businesses.
             </p>

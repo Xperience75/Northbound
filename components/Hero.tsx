@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { studio } from "@/lib/studio";
+import LiveBadge from "./LiveBadge";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -12,10 +13,10 @@ export default function Hero() {
       {/* Faint compass grid backdrop */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
         style={{
           backgroundImage:
-            "linear-gradient(to right, #14171c 1px, transparent 1px), linear-gradient(to bottom, #14171c 1px, transparent 1px)",
+            "linear-gradient(to right, var(--ink) 1px, transparent 1px), linear-gradient(to bottom, var(--ink) 1px, transparent 1px)",
           backgroundSize: "64px 64px",
         }}
       />
@@ -25,13 +26,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease }}
-          className="eyebrow mb-8 flex items-center gap-3"
+          className="mb-8"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-          {studio.location}
+          <LiveBadge />
         </motion.div>
 
-        <h1 className="display max-w-5xl text-[2.75rem] leading-[1.02] sm:text-6xl md:text-7xl lg:text-[6.5rem]">
+        <h1 className="display max-w-5xl text-[2.5rem] leading-[1.03] sm:text-6xl md:text-7xl lg:text-[6.5rem]">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,7 +63,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease, delay: 0.3 }}
-            className="lead col-span-7 max-w-prose"
+            className="lead md:col-span-7 max-w-prose"
           >
             {studio.positioning}
           </motion.p>
@@ -72,7 +72,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease, delay: 0.4 }}
-            className="col-span-5 flex flex-wrap gap-3 md:justify-end"
+            className="md:col-span-5 flex flex-wrap gap-3 md:justify-end"
           >
             <Link href="#work" className="btn-primary">
               View our work

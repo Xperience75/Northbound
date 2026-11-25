@@ -5,8 +5,29 @@
 :root {
   --canvas: #fafaf7;
   --ink: #14171c;
+  --ink-soft: #3a3f47;
+  --ink-muted: #6b7280;
   --line: #e5e2da;
+  --line-soft: #edeae2;
   --accent: #b85c38;
+  --accent-hover: #a04e2f;
+  --accent-tint: #f5e9e2;
+  --cream: #f3efe6;
+  --accent-rgb: 184, 92, 56;
+}
+
+.dark {
+  --canvas: #0b0c0e;
+  --ink: #f0f0ed;
+  --ink-soft: #c1c5cd;
+  --ink-muted: #8b929e;
+  --line: #22252a;
+  --line-soft: #2e3239;
+  --accent: #d87c58;
+  --accent-hover: #e0835c;
+  --accent-tint: #2a1e1a;
+  --cream: #14181f;
+  --accent-rgb: 216, 124, 88;
 }
 
 * {
@@ -78,7 +99,10 @@ body {
 
   /* Primary button */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-medium text-canvas transition-all duration-500 ease-executive hover:bg-accent hover:shadow-lg hover:shadow-accent/20;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-medium text-canvas transition-all duration-500 ease-executive hover:bg-accent hover:shadow-lg;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 10px 15px -3px rgba(var(--accent-rgb), 0.2), 0 4px 6px -4px rgba(var(--accent-rgb), 0.2);
   }
 
   /* Ghost / secondary button */

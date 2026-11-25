@@ -2,19 +2,25 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { studio } from "@/lib/studio";
 
 const links = [
-  { label: "Work", href: "#work" },
-  { label: "Studio", href: "#studio" },
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/#work" },
+  { label: "Studio", href: "/#studio" },
+  { label: "Services", href: "/#services" },
+  { label: "Process", href: "/#process" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const showSolidHeader = scrolled || !isHome;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -23,17 +29,36 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isDark = document.documentElement.classList.contains("dark");
+      setTheme(isDark ? "dark" : "light");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (theme === "light") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setTheme("light");
+    }
+  };
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-executive ${
-        scrolled
+        showSolidHeader
           ? "border-b border-line bg-canvas/85 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
       <nav className="shell flex h-16 items-center justify-between md:h-20">
         <Link
-          href="#top"
+          href="/"
           className="group flex items-center gap-2"
           aria-label="Northbound — home"
         >
@@ -63,62 +88,95 @@ export default function Nav() {
           ))}
         </div>
 
-        <div className="hidden md:block">
-          <Link href="#contact" className="btn-primary !py-2.5 !px-5 text-xs">
+        <div className="hidden items-center gap-4 md:flex">
+          <button
+            onClick={toggleTheme}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink transition-colors hover:bg-cream/40"
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            {theme === "light" ? (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-[18px] w-[18px]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-[18px] w-[18px]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m0 13.5V21m8.97-8.97h-2.25m-13.5 0H3m16.122-6.122l-1.591 1.591m-10.457 0l-1.591-1.591M18.364 18.364l-1.591-1.591m-10.457 0l-1.591 1.591M12 7.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z" />
+              </svg>
+            )}
+          </button>
+          <Link href="/#contact" className="btn-primary !py-2.5 !px-5 text-xs">
             Start a project
             <span aria-hidden>→</span>
           </Link>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen((o) => !o)}
-          className="flex h-10 w-10 items-center justify-center md:hidden"
-          aria-label="Toggle menu"
-          aria-expanded={open}
-        >
-          <div className="relative h-3 w-5">
-            <span
-              className={`absolute left-0 h-px w-5 bg-ink transition-all duration-300 ${
-                open ? "top-1.5 rotate-45" : "top-0"
-              }`}
-            />
-            <span
-              className={`absolute left-0 top-1.5 h-px w-5 bg-ink transition-all duration-300 ${
-                open ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`absolute left-0 h-px w-5 bg-ink transition-all duration-300 ${
-                open ? "top-1.5 -rotate-45" : "top-3"
-              }`}
-            />
-          </div>
-        </button>
+        {/* Mobile menu triggers */}
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            onClick={toggleTheme}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink transition-colors hover:bg-cream/40"
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            {theme === "light" ? (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-[18px] w-[18px]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-[18px] w-[18px]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m0 13.5V21m8.97-8.97h-2.25m-13.5 0H3m16.122-6.122l-1.591 1.591m-10.457 0l-1.591-1.591M18.364 18.364l-1.591-1.591m-10.457 0l-1.591 1.591M12 7.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z" />
+              </svg>
+            )}
+          </button>
+
+          <button
+            onClick={() => setOpen((o) => !o)}
+            className="flex h-10 w-10 items-center justify-center"
+            aria-label="Toggle menu"
+            aria-expanded={open}
+          >
+            <div className="relative h-3 w-5">
+              <span
+                className={`absolute left-0 h-px w-5 bg-ink transition-all duration-300 ${
+                  open ? "top-1.5 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-1.5 h-px w-5 bg-ink transition-all duration-300 ${
+                  open ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-px w-5 bg-ink transition-all duration-300 ${
+                  open ? "top-1.5 -rotate-45" : "top-3"
+                }`}
+              />
+            </div>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
       <div
-        className={`overflow-hidden border-t border-line bg-canvas transition-all duration-500 ease-executive md:hidden ${
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        className={`overflow-y-auto border-t border-line bg-canvas/95 backdrop-blur-lg transition-all duration-500 ease-executive md:hidden ${
+          open ? "max-h-[85vh] opacity-100 py-6" : "max-h-0 opacity-0 py-0 overflow-hidden border-t-transparent"
         }`}
       >
-        <div className="shell flex flex-col gap-1 py-6">
+        <div className="shell flex flex-col gap-1 pb-4">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="flex items-center justify-between border-b border-lineSoft py-4 font-display text-2xl font-light text-ink"
+              className="flex items-center justify-between border-b border-lineSoft py-3.5 font-display text-2xl font-light text-ink transition-colors hover:text-accent"
             >
               {l.label}
               <span aria-hidden className="text-ink-muted">→</span>
             </Link>
           ))}
           <Link
-            href="#contact"
+            href="/#contact"
             onClick={() => setOpen(false)}
-            className="btn-primary mt-4 w-full"
+            className="btn-primary mt-6 w-full py-4 text-center"
           >
             Start a project <span aria-hidden>→</span>
           </Link>

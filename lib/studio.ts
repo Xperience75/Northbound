@@ -8,9 +8,9 @@ export const studio = {
   email: "hello@northbound.studio",
   socials: [
     { label: "Email", handle: "hello@northbound.studio", url: "mailto:hello@northbound.studio" },
-    { label: "LinkedIn", handle: "Northbound Studio", url: "#" },
-    { label: "GitHub", handle: "@northbound", url: "#" },
-    { label: "X", handle: "@northbound", url: "#" },
+    { label: "LinkedIn", handle: "Northbound Studio", url: "https://linkedin.com/company/northbound-studio" },
+    { label: "GitHub", handle: "@northbound-studio", url: "https://github.com/northbound-studio" },
+    { label: "X", handle: "@northbound_dev", url: "https://x.com/northbound_dev" },
   ],
   capabilities: [
     "Full-Stack Development",

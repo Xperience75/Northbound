@@ -22,7 +22,11 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Northbound — Web platforms that move businesses forward.",
+  metadataBase: new URL("https://northbound.studio"),
+  title: {
+    default: "Northbound — Web platforms that move businesses forward.",
+    template: "%s | Northbound Studio",
+  },
   description:
     "Northbound is a full-stack web studio building refined, high-performance platforms for ambitious businesses across energy, logistics, construction, media, and technology.",
   keywords: [
@@ -32,13 +36,34 @@ export const metadata: Metadata = {
     "Nigeria web studio",
     "corporate website design",
     "web app development",
+    "enterprise web platforms",
   ],
-  authors: [{ name: "Northbound" }],
+  authors: [{ name: "Northbound Studio", url: "https://northbound.studio" }],
+  creator: "Northbound Studio",
   openGraph: {
     title: "Northbound — Web platforms that move businesses forward.",
     description:
-      "A full-stack web studio building refined, high-performance platforms for ambitious businesses.",
+      "A full-stack web studio building refined, high-performance platforms for ambitious businesses across energy, logistics, construction, and media.",
+    url: "https://northbound.studio",
+    siteName: "Northbound Studio",
+    locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Northbound — Web platforms that move businesses forward.",
+    description:
+      "A full-stack web studio building refined, high-performance platforms for ambitious businesses.",
+    creator: "@northbound_dev",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 
@@ -49,7 +74,48 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "Northbound Studio",
+              "url": "https://northbound.studio",
+              "description": "Full-stack web studio building refined, high-performance web applications and corporate platforms.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "NG"
+              },
+              "priceRange": "$$$$",
+              "sameAs": [
+                "https://linkedin.com/company/northbound-studio",
+                "https://github.com/northbound-studio",
+                "https://x.com/northbound_dev"
+              ]
+            }),
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  var supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (theme === 'dark' || (!theme && supportDarkMode)) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="font-sans antialiased bg-canvas text-ink transition-colors duration-300">{children}</body>
     </html>
   );
 }
