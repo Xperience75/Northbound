@@ -9,18 +9,23 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const budgets = ["< $2k", "$2k – $8k", "$8k – $20k", "$20k +", "Not sure yet"];
 const services = ["Web App", "Corporate Site", "Publishing Platform", "Design System", "Other"];
 
+const initialForm = {
+  name: "",
+  email: "",
+  company: "",
+  service: "",
+  budget: "",
+  message: "",
+  website: "",
+};
+
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedDetails, setCopiedDetails] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    company: "",
-    service: "",
-    budget: "",
-    message: "",
-  });
+  const [form, setForm] = useState(initialForm);
 
   const update = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -43,14 +48,49 @@ export default function Contact() {
     } catch {}
   };
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`New project inquiry — ${form.name || "Unknown"}`);
+  const buildMailtoHref = () => {
+    const subject = encodeURIComponent(
+      `New project inquiry — ${form.name || "Unknown"}`
+    );
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\nCompany: ${form.company}\nService: ${form.service}\nBudget: ${form.budget}\n\n${form.message}`
     );
-    window.location.href = `mailto:${studio.email}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    return `mailto:${studio.email}?subject=${subject}&body=${body}`;
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (submitting) return;
+
+    setError(null);
+    setSubmitting(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data: { ok?: boolean; error?: string } | null = await res
+        .json()
+        .catch(() => null);
+
+      if (res.ok && data?.ok) {
+        setSubmitted(true);
+      } else {
+        setError(
+          data?.error ||
+            "We couldn't send your inquiry right now. Please try again or use the fallback options below."
+        );
+      }
+    } catch {
+      setError(
+        "Network error while sending your inquiry. Please try again or use your email app below."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -119,10 +159,10 @@ export default function Contact() {
                   ✓
                 </div>
                 <h3 className="font-display text-2xl font-light text-white">
-                  Your inquiry is ready.
+                  Inquiry received.
                 </h3>
                 <p className="mt-3 max-w-md text-white/70 leading-relaxed">
-                  We&apos;ve initiated your mail client with the details pre-filled. If your email app did not open automatically, copy the message text or send directly to{" "}
+                  Thank you for reaching out. We&apos;ve received your project details and will reply within two business days. Need to add anything? Email us directly at{" "}
                   <a href={`mailto:${studio.email}`} className="link-underline text-accent">
                     {studio.email}
                   </a>
@@ -138,7 +178,12 @@ export default function Contact() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setSubmitted(false)}
+                    onClick={() => {
+                      setSubmitted(false);
+                      setError(null);
+                      setCopiedDetails(false);
+                      setForm(initialForm);
+                    }}
                     className="font-mono text-xs text-white/50 hover:text-white transition-colors px-3 py-2"
                   >
                     Send another inquiry
@@ -150,6 +195,18 @@ export default function Contact() {
                 onSubmit={onSubmit}
                 className="grid gap-6 rounded-2xl border border-accent/20 bg-white/[0.03] p-7 md:p-9"
               >
+                <div className="sr-only" aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    id="website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={form.website}
+                    onChange={(e) => update("website", e.target.value)}
+                  />
+                </div>
                 <div className="grid gap-6 sm:grid-cols-2">
                   <Field
                     label="Your name"
@@ -224,8 +281,42 @@ export default function Contact() {
                   />
                 </div>
 
-                <button type="submit" className="btn-primary !bg-white !text-[#14171c] hover:!bg-accent hover:!text-white mt-2 w-full">
-                  Send inquiry <span aria-hidden>→</span>
+                {error && (
+                  <div
+                    role="alert"
+                    className="rounded-xl border border-accent/40 bg-accent/10 p-4 text-sm text-white/90"
+                  >
+                    <p>{error}</p>
+                    <div className="mt-3 flex flex-wrap items-center gap-3">
+                      <a
+                        href={buildMailtoHref()}
+                        className="rounded-full border border-white/25 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wider2 text-white hover:border-accent hover:text-accent transition-colors"
+                      >
+                        Open in Email App
+                      </a>
+                      <button
+                        type="button"
+                        onClick={copyInquiryDetails}
+                        className="rounded-full border border-white/25 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wider2 text-white hover:border-accent hover:text-accent transition-colors"
+                      >
+                        {copiedDetails ? "Details Copied ✓" : "Copy Form Details"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-primary !bg-white !text-[#14171c] hover:!bg-accent hover:!text-white mt-2 w-full disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {submitting ? (
+                    "Sending inquiry..."
+                  ) : (
+                    <>
+                      Send inquiry <span aria-hidden>→</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}
