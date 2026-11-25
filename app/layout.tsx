@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { siteUrl } from "@/lib/studio";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://northbound.studio"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Northbound — Web platforms that move businesses forward.",
     template: "%s | Northbound Studio",
@@ -38,13 +39,13 @@ export const metadata: Metadata = {
     "web app development",
     "enterprise web platforms",
   ],
-  authors: [{ name: "Northbound Studio", url: "https://northbound.studio" }],
+  authors: [{ name: "Northbound Studio", url: siteUrl }],
   creator: "Northbound Studio",
   openGraph: {
     title: "Northbound — Web platforms that move businesses forward.",
     description:
       "A full-stack web studio building refined, high-performance platforms for ambitious businesses across energy, logistics, construction, and media.",
-    url: "https://northbound.studio",
+    url: siteUrl,
     siteName: "Northbound Studio",
     locale: "en_US",
     type: "website",
@@ -73,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -82,7 +83,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
               "name": "Northbound Studio",
-              "url": "https://northbound.studio",
+              "url": siteUrl,
               "description": "Full-stack web studio building refined, high-performance web applications and corporate platforms.",
               "address": {
                 "@type": "PostalAddress",

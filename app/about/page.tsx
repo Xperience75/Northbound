@@ -16,6 +16,21 @@ export const metadata: Metadata = {
     title: "About Northbound Studio",
     description:
       "A full-stack web studio building refined, high-performance digital platforms for ambitious businesses.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Northbound Studio — Web platforms that move businesses forward.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Northbound Studio",
+    description:
+      "A full-stack web studio building refined, high-performance digital platforms for ambitious businesses.",
+    images: ["/opengraph-image"],
   },
 };
 

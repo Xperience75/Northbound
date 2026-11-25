@@ -1,3 +1,7 @@
+export const siteUrl = (
+  globalThis.process?.env?.NEXT_PUBLIC_SITE_URL || "https://northbound.studio"
+).replace(/\/$/, "");
+
 export const studio = {
   name: "Northbound",
   tagline: "Web platforms that move businesses forward.",

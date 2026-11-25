@@ -39,6 +39,12 @@ export function generateMetadata({
         },
       ],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} — Northbound Case Study`,
+      description: project.summary,
+      images: [project.image],
+    },
   };
 }
 
