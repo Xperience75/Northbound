@@ -28,24 +28,26 @@ export default function Footer() {
               Connect
             </p>
             <ul className="mt-4 space-y-2.5">
-              {studio.socials.map((s) => {
-                const isExternal = s.url.startsWith("http");
-                return (
-                  <li key={s.label}>
-                    <a
-                      href={s.url}
-                      target={isExternal ? "_blank" : undefined}
-                      rel={isExternal ? "noopener noreferrer" : undefined}
-                      className="link-underline inline-flex items-baseline gap-3 text-white/80 hover:text-white"
-                    >
-                      <span className="inline-block w-24 font-mono text-[11px] uppercase tracking-wider2 text-white/40">
-                        {s.label}
-                      </span>
-                      <span>{s.handle}</span>
-                    </a>
-                  </li>
-                );
-              })}
+              {studio.socials
+                .filter((s) => s.enabled !== false)
+                .map((s) => {
+                  const isExternal = s.url.startsWith("http");
+                  return (
+                    <li key={s.label}>
+                      <a
+                        href={s.url}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                        className="link-underline inline-flex items-baseline gap-3 text-white/80 hover:text-white"
+                      >
+                        <span className="inline-block w-24 font-mono text-[11px] uppercase tracking-wider2 text-white/40">
+                          {s.label}
+                        </span>
+                        <span>{s.handle}</span>
+                      </a>
+                    </li>
+                  );
+                })}
             </ul>
           </div>
         </div>

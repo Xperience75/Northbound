@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { siteUrl } from "@/lib/studio";
+import { siteUrl, studio } from "@/lib/studio";
+
+const activeSocialUrls = studio.socials
+  .filter((s) => s.enabled !== false && s.url.startsWith("http"))
+  .map((s) => s.url);
 
 const inter = Inter({
   subsets: ["latin"],
@@ -90,11 +94,7 @@ export default function RootLayout({
                 "addressCountry": "NG"
               },
               "priceRange": "$$$$",
-              "sameAs": [
-                "https://linkedin.com/company/northbound-studio",
-                "https://github.com/northbound-studio",
-                "https://x.com/northbound_dev"
-              ]
+              ...(activeSocialUrls.length > 0 ? { sameAs: activeSocialUrls } : {}),
             }),
           }}
         />

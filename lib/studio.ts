@@ -2,6 +2,13 @@ export const siteUrl = (
   globalThis.process?.env?.NEXT_PUBLIC_SITE_URL || "https://northbound.studio"
 ).replace(/\/$/, "");
 
+export interface StudioSocial {
+  label: string;
+  handle: string;
+  url: string;
+  enabled?: boolean;
+}
+
 export const studio = {
   name: "Northbound",
   tagline: "Web platforms that move businesses forward.",
@@ -10,12 +17,13 @@ export const studio = {
   founded: "2021",
   location: "Nigeria · Working worldwide",
   email: "hello@northbound.studio",
+  // Flip `enabled: true` once the corresponding social profile is live
   socials: [
-    { label: "Email", handle: "hello@northbound.studio", url: "mailto:hello@northbound.studio" },
-    { label: "LinkedIn", handle: "Northbound Studio", url: "https://linkedin.com/company/northbound-studio" },
-    { label: "GitHub", handle: "@northbound-studio", url: "https://github.com/northbound-studio" },
-    { label: "X", handle: "@northbound_dev", url: "https://x.com/northbound_dev" },
-  ],
+    { label: "Email", handle: "hello@northbound.studio", url: "mailto:hello@northbound.studio", enabled: true },
+    { label: "LinkedIn", handle: "Northbound Studio", url: "https://linkedin.com/company/northbound-studio", enabled: false },
+    { label: "GitHub", handle: "@northbound-studio", url: "https://github.com/northbound-studio", enabled: false },
+    { label: "X", handle: "@northbound_dev", url: "https://x.com/northbound_dev", enabled: false },
+  ] as StudioSocial[],
   capabilities: [
     "Full-Stack Development",
     "Frontend Engineering",

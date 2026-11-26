@@ -1,5 +1,11 @@
 export type ProjectCategory = "Web App" | "Corporate" | "Publishing";
 
+export interface ProjectScreenshots {
+  desktop: string;
+  tablet: string;
+  mobile: string;
+}
+
 export interface ProjectMetric {
   label: string;
   value: string;
@@ -28,6 +34,7 @@ export interface Project {
   services: string[];
   accent: string; // hex used for fallback / overlay tint
   image: string; // local screenshot path in /public
+  screenshots: ProjectScreenshots;
   metrics: ProjectMetric[];
   testimonial?: ProjectTestimonial;
 }
@@ -54,6 +61,11 @@ export const projects: Project[] = [
     services: ["Strategy", "Design System", "Frontend Engineering", "CMS"],
     accent: "#1E3A5F",
     image: "/projects/vintage-powercare.jpg",
+    screenshots: {
+      desktop: "/projects/vintage-powercare-desktop.jpg",
+      tablet: "/projects/vintage-powercare-tablet.jpg",
+      mobile: "/projects/vintage-powercare-mobile.jpg",
+    },
     metrics: [
       { label: "Engineering Divisions Unified", value: "6" },
       { label: "ISO 9001:2015", value: "Verified" },
@@ -88,6 +100,11 @@ export const projects: Project[] = [
     services: ["UX Architecture", "Frontend Engineering", "Copywriting", "SEO"],
     accent: "#0F5132",
     image: "/projects/technovative-solutions.jpg",
+    screenshots: {
+      desktop: "/projects/technovative-solutions-desktop.jpg",
+      tablet: "/projects/technovative-solutions-tablet.jpg",
+      mobile: "/projects/technovative-solutions-mobile.jpg",
+    },
     metrics: [
       { label: "Service Lines Catalogued", value: "9" },
       { label: "Sales Cycle Acceleration", value: "-35%" },
@@ -122,6 +139,11 @@ export const projects: Project[] = [
     services: ["Product Strategy", "UX Design", "Full-Stack Engineering", "Dashboard"],
     accent: "#7C2D12",
     image: "/projects/hayapass-global-logistics.jpg",
+    screenshots: {
+      desktop: "/projects/hayapass-global-logistics-desktop.jpg",
+      tablet: "/projects/hayapass-global-logistics-tablet.jpg",
+      mobile: "/projects/hayapass-global-logistics-mobile.jpg",
+    },
     metrics: [
       { label: "Support Ticket Reduction", value: "-60%" },
       { label: "Instant Quote Engine", value: "< 2 sec" },
@@ -156,6 +178,11 @@ export const projects: Project[] = [
     services: ["Strategy", "Brand Presentation", "Frontend Engineering", "Content"],
     accent: "#4A2C2A",
     image: "/projects/prometrics-construction.jpg",
+    screenshots: {
+      desktop: "/projects/prometrics-construction-desktop.jpg",
+      tablet: "/projects/prometrics-construction-tablet.jpg",
+      mobile: "/projects/prometrics-construction-mobile.jpg",
+    },
     metrics: [
       { label: "Delivery Methodology Steps", value: "8" },
       { label: "LEED & Lean Focus", value: "100%" },
@@ -184,6 +211,11 @@ export const projects: Project[] = [
     services: ["Brand Strategy", "Design", "Frontend Engineering", "Motion"],
     accent: "#2C3E50",
     image: "/projects/prometrics-construction-hub.jpg",
+    screenshots: {
+      desktop: "/projects/prometrics-construction-hub-desktop.jpg",
+      tablet: "/projects/prometrics-construction-hub-tablet.jpg",
+      mobile: "/projects/prometrics-construction-hub-mobile.jpg",
+    },
     metrics: [
       { label: "Industry Heritage", value: "15+ Yrs" },
       { label: "BIM & Structural Tech", value: "Integrated" },
@@ -218,6 +250,11 @@ export const projects: Project[] = [
     services: ["Platform Strategy", "CMS Architecture", "Full-Stack Engineering", "Editorial UX"],
     accent: "#8B1A1A",
     image: "/projects/the-wayout-media-network.jpg",
+    screenshots: {
+      desktop: "/projects/the-wayout-media-network-desktop.jpg",
+      tablet: "/projects/the-wayout-media-network-tablet.jpg",
+      mobile: "/projects/the-wayout-media-network-mobile.jpg",
+    },
     metrics: [
       { label: "Editorial Categories", value: "9" },
       { label: "Monthly Pageviews", value: "250k+" },
@@ -252,6 +289,11 @@ export const projects: Project[] = [
     services: ["Brand Presentation", "Frontend Engineering", "Design System"],
     accent: "#5B21B6",
     image: "/projects/twomn-corporate.jpg",
+    screenshots: {
+      desktop: "/projects/twomn-corporate-desktop.jpg",
+      tablet: "/projects/twomn-corporate-tablet.jpg",
+      mobile: "/projects/twomn-corporate-mobile.jpg",
+    },
     metrics: [
       { label: "Brand Cohesion", value: "100%" },
       { label: "Partner Sponsorships", value: "+90%" },
