@@ -7,6 +7,7 @@ import {
   useCallback,
   type KeyboardEvent,
   type MouseEvent,
+  type PointerEvent,
 } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +15,6 @@ import {
   motion,
   AnimatePresence,
   useReducedMotion,
-  type PanInfo,
   type Variants,
 } from "framer-motion";
 import { projects, type ProjectCategory } from "@/lib/projects";
@@ -106,10 +106,18 @@ export default function Work() {
   const [direction, setDirection] = useState<1 | -1>(1);
   const [isPaused, setIsPaused] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
 
   const directionRef = useRef<1 | -1>(1);
   const wasDraggedRef = useRef(false);
   const dragResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pointerRef = useRef<{
+    id: number;
+    startX: number;
+    startY: number;
+    axis: "x" | "y" | null;
+    captured: boolean;
+  } | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const visible =
@@ -179,32 +187,78 @@ export default function Work() {
     }
   };
 
-  const handleDragStart = () => {
+  const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    if (visible.length <= 1) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    if ((e.target as HTMLElement | null)?.closest("button")) return;
+
     if (dragResetTimerRef.current) {
       clearTimeout(dragResetTimerRef.current);
     }
-    setIsDragging(true);
     wasDraggedRef.current = false;
+    pointerRef.current = {
+      id: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      axis: null,
+      captured: false,
+    };
   };
 
-  const handleDrag = (_e: globalThis.MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (Math.abs(info.offset.x) > 8) {
-      wasDraggedRef.current = true;
+  const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    const p = pointerRef.current;
+    if (!p || p.id !== e.pointerId) return;
+
+    const dx = e.clientX - p.startX;
+    const dy = e.clientY - p.startY;
+
+    if (!p.axis) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      if (Math.abs(dx) >= Math.abs(dy)) {
+        p.axis = "x";
+        wasDraggedRef.current = true;
+        setIsDragging(true);
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          p.captured = true;
+        } catch {}
+      } else {
+        p.axis = "y";
+        return;
+      }
+    }
+
+    if (p.axis === "x") {
+      setDragOffset(Math.max(-64, Math.min(64, dx * 0.35)));
     }
   };
 
-  const handleDragEnd = (_e: globalThis.MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const finishPointer = (e: PointerEvent<HTMLDivElement>, cancelled = false) => {
+    const p = pointerRef.current;
+    if (!p || p.id !== e.pointerId) return;
+
+    const dx = e.clientX - p.startX;
+    if (p.captured) {
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {}
+    }
+
+    pointerRef.current = null;
     setIsDragging(false);
-    if (info.offset.x < -55 || info.velocity.x < -300) {
-      wasDraggedRef.current = true;
-      goNext();
-    } else if (info.offset.x > 55 || info.velocity.x > 300) {
-      wasDraggedRef.current = true;
-      goPrev();
+    setDragOffset(0);
+
+    if (!cancelled && p.axis === "x") {
+      if (dx <= -45) {
+        goNext();
+      } else if (dx >= 45) {
+        goPrev();
+      }
     }
+
     dragResetTimerRef.current = setTimeout(() => {
       wasDraggedRef.current = false;
-    }, 120);
+    }, 140);
   };
 
   const handleClickCapture = (e: MouseEvent<HTMLDivElement>) => {
@@ -223,7 +277,7 @@ export default function Work() {
             <div>
               <p className="eyebrow mb-6">(Selected Work)</p>
               <h2 className="display max-w-2xl text-4xl leading-[1.05] md:text-6xl">
-                Seven platforms. One standard.
+                Eight platforms. One standard.
               </h2>
             </div>
           </Reveal>
@@ -324,16 +378,18 @@ export default function Work() {
             className="mt-10 focus:outline-none"
           >
             <div className="overflow-x-clip">
-              <motion.div
-                drag={visible.length > 1 ? "x" : false}
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.14}
-                dragMomentum={false}
-                onDragStart={handleDragStart}
-                onDrag={handleDrag}
-                onDragEnd={handleDragEnd}
+              <div
+                onDragStart={(e) => e.preventDefault()}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={(e) => finishPointer(e, false)}
+                onPointerCancel={(e) => finishPointer(e, true)}
                 onClickCapture={handleClickCapture}
                 className={visible.length > 1 ? "cursor-grab select-none active:cursor-grabbing touch-pan-y" : ""}
+                style={{
+                  transform: dragOffset !== 0 ? `translate3d(${dragOffset}px, 0, 0)` : undefined,
+                  transition: isDragging ? "none" : "transform 220ms cubic-bezier(0.22, 1, 0.36, 1)",
+                }}
               >
                 <AnimatePresence mode="wait" custom={direction}>
                   <motion.article
@@ -535,7 +591,7 @@ export default function Work() {
                     </motion.div>
                   </motion.article>
                 </AnimatePresence>
-              </motion.div>
+              </div>
             </div>
 
             {/* Bottom Project Selector Strip */}

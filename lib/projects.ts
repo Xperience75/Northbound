@@ -41,6 +41,39 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "oak-hr",
+    title: "OAK-HR Workforce OS",
+    client: "OAK-HR (Enterprise Multi-Tenant SaaS)",
+    category: "Web App",
+    industry: "Enterprise SaaS & Workforce Tech",
+    year: "2026",
+    role: "Full-stack architecture · Multi-tenant SaaS · AI & Payroll Engine",
+    liveUrl: "https://oak-hr.onrender.com",
+    summary:
+      "An enterprise multi-tenant Workforce Operating System unifying AI recruitment (ATS), ZKTeco biometric attendance, Finance Act PAYE payroll, appraisals, and an in-app document studio.",
+    challenge:
+      "Growing enterprises routinely juggle fragmented spreadsheets, disconnected biometric attendance terminals, manual PAYE tax computations, and scattered HR folders — causing payroll errors, leave overlaps, and zero cross-branch visibility. OAK-HR needed a single calm, multi-tenant operating system capable of enforcing strict cryptographic tenant isolation while orchestrating complex Nigerian payroll legislation, hardware biometric sync, and AI-assisted hiring workflows at scale.",
+    solution:
+      "We architected a full-stack multi-tenant HRMS spanning eight unified operational pillars: an AI Recruitment ATS with automated candidate fit scoring, universal ZKTeco and OEM biometric attendance ingestion, an automated Finance Act Nigeria PAYE payroll and tranche proration engine, policy-driven leave governance, tripartite KPI and 360° performance appraisals, a visual Document Studio, an automated Employee Engagement Hub, and a Fleet/Assets/HSE command center — backed by strict PostgreSQL tenant isolation, granular RBAC, and dual flat-rate plus Pay-As-You-Go Paystack billing.",
+    outcome:
+      "OAK-HR consolidates 16+ enterprise HR and operational suites into one high-clarity command surface with zero cross-tenant leakage. Organizations can provision an isolated workspace in minutes, automate PAYE and pension compliance, and orchestrate 77 metered HR, payroll, and AI actions from a single platform.",
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind CSS", "AI / LLM", "Paystack"],
+    services: ["Multi-Tenant SaaS", "Full-Stack Engineering", "AI Workflows", "Payroll & Billing Engine"],
+    accent: "#D97706",
+    image: "/projects/oak-hr.jpg",
+    screenshots: {
+      desktop: "/projects/oak-hr-desktop.jpg",
+      tablet: "/projects/oak-hr-tablet.jpg",
+      mobile: "/projects/oak-hr-mobile.jpg",
+    },
+    metrics: [
+      { label: "Unified HR & Ops Suites", value: "16+" },
+      { label: "Operational Pillars", value: "8" },
+      { label: "Metered PAYG Actions", value: "77" },
+      { label: "Cross-Tenant Leakage", value: "Zero" },
+    ],
+  },
+  {
     slug: "vintage-powercare",
     title: "Vintage Powercare",
     client: "Vintage Powercare Limited",
@@ -304,6 +337,7 @@ export const projects: Project[] = [
 ];
 
 export const trustIndustries = [
+  "Enterprise SaaS & HR Tech",
   "Power & Energy",
   "Logistics & Freight",
   "Civil Construction",

@@ -27,7 +27,7 @@ export default function Studio() {
 
           <Reveal delay={0.18}>
             <p className="mb-12 text-ink-soft">
-              Our work spans seven live platforms across five industries. What
+              Our work spans eight live platforms across six industries. What
               ties them together is a single standard: design that respects the
               visitor, engineering that holds up under load, and a partnership
               that doesn&apos;t end at launch.

@@ -90,7 +90,7 @@ export const process = [
 ];
 
 export const stats = [
-  { value: "7", label: "Platforms shipped" },
+  { value: "8", label: "Platforms shipped" },
   { value: "5+", label: "Industries served" },
   { value: "100%", label: "Client-owned code" },
 ];
