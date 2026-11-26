@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import BrowserMockup from "@/components/BrowserMockup";
+import ResponsiveShowcase from "@/components/ResponsiveShowcase";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -144,7 +145,15 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                 </a>
               </div>
               <BrowserMockup
-                image={project.image}
+                image={project.screenshots.desktop}
+                title={project.title}
+                url={project.liveUrl}
+              />
+            </Reveal>
+            <Reveal delay={0.1} className="mt-10 md:mt-12">
+              <ResponsiveShowcase
+                tablet={project.screenshots.tablet}
+                mobile={project.screenshots.mobile}
                 title={project.title}
                 url={project.liveUrl}
               />
@@ -162,7 +171,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               </Reveal>
               <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
                 {project.metrics.map((m, idx) => (
-                  <Reveal key={m.label} delay={idx * 0.06}>
+                  <Reveal key={m.label} delay={idx * 0.06} className="h-full">
                     <div className="flex h-full flex-col justify-between bg-canvas p-6 md:p-8">
                       <div className="display text-3xl sm:text-4xl text-ink font-light">
                         {m.value}
