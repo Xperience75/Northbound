@@ -144,10 +144,10 @@ export default function Work() {
                 transition={{ duration: 0.4, ease }}
               >
                 {/* Asymmetric 3-Device Bento Photo Grid */}
-                <div className="grid gap-4 lg:grid-cols-12">
-                  {/* Left — Widescreen / Desktop Frame */}
-                  <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-cream/40 lg:col-span-7">
-                    <div className="flex items-center justify-between border-b border-line bg-canvas/80 px-4 py-2.5">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-12 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,0.82fr)_minmax(0,0.48fr)] lg:items-stretch">
+                  {/* Child 1 — Widescreen / Desktop Frame */}
+                  <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-cream/40 sm:col-span-12 lg:col-span-1">
+                    <div className="flex h-9 shrink-0 items-center justify-between border-b border-line bg-canvas/80 px-4">
                       <div className="flex items-center gap-1.5" aria-hidden>
                         <span className="h-2 w-2 rounded-full bg-line" />
                         <span className="h-2 w-2 rounded-full bg-line" />
@@ -170,62 +170,59 @@ export default function Work() {
                         src={activeProject.screenshots.desktop}
                         alt={`${activeProject.title} desktop view`}
                         fill
-                        sizes="(max-width: 1024px) 100vw, 58vw"
+                        sizes="(max-width: 1024px) 100vw, 55vw"
                         className="object-cover object-top transition-transform duration-700 ease-executive group-hover:scale-[1.02]"
                         priority
                       />
                     </Link>
                   </div>
 
-                  {/* Right — Tablet & Mobile Pair */}
-                  <div className="grid h-full grid-cols-12 gap-4 lg:col-span-5">
-                    {/* Tablet Frame */}
-                    <div className="col-span-7 flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-cream/40">
-                      <div className="flex items-center justify-between border-b border-line bg-canvas/80 px-3 py-2">
-                        <span className="h-2 w-2 rounded-full bg-line" aria-hidden />
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-ink-muted">
-                          TABLET
-                        </span>
-                      </div>
-
-                      <Link
-                        href={`/work/${activeProject.slug}`}
-                        aria-label={`View ${activeProject.title} tablet case study`}
-                        className="group relative block aspect-[3/4] w-full overflow-hidden bg-cream lg:aspect-auto lg:flex-1"
-                      >
-                        <Image
-                          src={activeProject.screenshots.tablet}
-                          alt={`${activeProject.title} tablet view`}
-                          fill
-                          sizes="(max-width: 1024px) 58vw, 24vw"
-                          className="object-cover object-top transition-transform duration-700 ease-executive group-hover:scale-[1.02]"
-                        />
-                      </Link>
+                  {/* Child 2 — Tablet Frame */}
+                  <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-cream/40 sm:col-span-7 lg:col-span-1">
+                    <div className="flex h-9 shrink-0 items-center justify-between border-b border-line bg-canvas/80 px-3">
+                      <span className="h-2 w-2 rounded-full bg-line" aria-hidden />
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-ink-muted">
+                        TABLET
+                      </span>
                     </div>
 
-                    {/* Mobile Frame */}
-                    <div className="col-span-5 flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-cream/40">
-                      <div className="flex items-center justify-between border-b border-line bg-canvas/80 px-3 py-2">
-                        <span className="h-1 w-6 rounded-full bg-line" aria-hidden />
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-ink-muted">
-                          MOBILE
-                        </span>
-                      </div>
+                    <Link
+                      href={`/work/${activeProject.slug}`}
+                      aria-label={`View ${activeProject.title} tablet case study`}
+                      className="group relative block aspect-[3/4] w-full overflow-hidden bg-cream lg:aspect-auto lg:flex-1"
+                    >
+                      <Image
+                        src={activeProject.screenshots.tablet}
+                        alt={`${activeProject.title} tablet view`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 58vw, 29vw"
+                        className="object-cover object-top transition-transform duration-700 ease-executive group-hover:scale-[1.02]"
+                      />
+                    </Link>
+                  </div>
 
-                      <Link
-                        href={`/work/${activeProject.slug}`}
-                        aria-label={`View ${activeProject.title} mobile case study`}
-                        className="group relative block aspect-[9/16] w-full overflow-hidden bg-cream lg:aspect-auto lg:flex-1"
-                      >
-                        <Image
-                          src={activeProject.screenshots.mobile}
-                          alt={`${activeProject.title} mobile view`}
-                          fill
-                          sizes="(max-width: 1024px) 42vw, 17vw"
-                          className="object-cover object-top transition-transform duration-700 ease-executive group-hover:scale-[1.02]"
-                        />
-                      </Link>
+                  {/* Child 3 — Mobile Frame */}
+                  <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-cream/40 sm:col-span-5 lg:col-span-1">
+                    <div className="flex h-9 shrink-0 items-center justify-between border-b border-line bg-canvas/80 px-3">
+                      <span className="h-1 w-6 rounded-full bg-line" aria-hidden />
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-ink-muted">
+                        MOBILE
+                      </span>
                     </div>
+
+                    <Link
+                      href={`/work/${activeProject.slug}`}
+                      aria-label={`View ${activeProject.title} mobile case study`}
+                      className="group relative block aspect-[9/16] w-full overflow-hidden bg-cream sm:aspect-auto sm:flex-1 lg:flex-1"
+                    >
+                      <Image
+                        src={activeProject.screenshots.mobile}
+                        alt={`${activeProject.title} mobile view`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 42vw, 17vw"
+                        className="object-cover object-top transition-transform duration-700 ease-executive group-hover:scale-[1.02]"
+                      />
+                    </Link>
                   </div>
                 </div>
 
