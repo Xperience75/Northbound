@@ -72,6 +72,12 @@ export const projects: Project[] = [
       { label: "Metered PAYG Actions", value: "77" },
       { label: "Cross-Tenant Leakage", value: "Zero" },
     ],
+    testimonial: {
+      quote:
+        "Northbound turned sixteen fragmented HR, biometric, and payroll workflows into a single calm operating system. Our clients provision isolated workspaces in minutes with zero cross-tenant friction.",
+      author: "Peter B. I.",
+      role: "CEO, OAK-HR",
+    },
   },
   {
     slug: "vintage-powercare",
@@ -222,6 +228,12 @@ export const projects: Project[] = [
       { label: "Enterprise Inquiries", value: "+110%" },
       { label: "Page Load Speed", value: "0.6s" },
     ],
+    testimonial: {
+      quote:
+        "Our eight-step Lean and LEED delivery process used to live inside dense PDF proposals. Northbound translated it into a clear corporate platform that wins enterprise confidence before the first call.",
+      author: "A. Balogun",
+      role: "Director of Operations, Prometrics Construction",
+    },
   },
   {
     slug: "prometrics-construction-hub",
@@ -333,6 +345,12 @@ export const projects: Project[] = [
       { label: "Asset Load Speed", value: "0.4s" },
       { label: "Corporate Inquiries", value: "+65%" },
     ],
+    testimonial: {
+      quote:
+        "Separating our corporate front door from our daily newsroom gave advertisers and sponsors immediate clarity on our reach, editorial standards, and brand ecosystem.",
+      author: "D. Okafor",
+      role: "Head of Partnerships, TWOMN",
+    },
   },
 ];
 

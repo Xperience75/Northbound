@@ -10,6 +10,15 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     quote:
+      "Northbound architected OAK-HR from a multi-tenant vision into a unified enterprise workforce platform spanning AI recruitment, biometric attendance, and Finance Act payroll — with zero cross-tenant compromise.",
+    author: "Peter B. I.",
+    role: "CEO",
+    company: "OAK-HR",
+    industry: "Enterprise SaaS & Workforce Tech",
+    metric: "16+ unified HR & ops suites",
+  },
+  {
+    quote:
       "Northbound delivered an engineering-grade digital platform that accurately communicates our six divisions and ISO certification. It immediately won the trust of enterprise procurement teams.",
     author: "Engr. Victor Kalu",
     role: "Managing Director",
